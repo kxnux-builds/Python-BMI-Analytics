@@ -18,7 +18,7 @@ class VitalityApp(ctk.CTk):
         self.users = self.db.get_users()
         self.current_user_id = self.users[0][0]
 
-        self.title("Vitality Pro - Health Analytics")
+        self.title("BMI-Analytics")
         self.geometry("1000x750")
         ctk.set_appearance_mode("Dark")
         
