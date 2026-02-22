@@ -33,7 +33,6 @@ class VitalityApp(ctk.CTk):
         self.setup_manage_data_tab()
         self.refresh_all()
 
-    # --- TOP BAR & THEMING ---
     def setup_top_bar(self):
         self.top_frame = ctk.CTkFrame(self, height=50, corner_radius=0)
         self.top_frame.pack(fill="x", side="top", pady=(0, 10))
@@ -76,13 +75,11 @@ class VitalityApp(ctk.CTk):
         except StopIteration:
             messagebox.showerror("Error", "User profile not found.")
 
-    # --- DASHBOARD TAB ---
     def setup_dashboard_tab(self):
         self.tab_dash.grid_columnconfigure(0, weight=1)
         self.tab_dash.grid_columnconfigure(1, weight=3)
         self.tab_dash.grid_rowconfigure(0, weight=1)
 
-        # Input Panel
         self.input_frame = ctk.CTkFrame(self.tab_dash, corner_radius=15)
         self.input_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
@@ -109,7 +106,6 @@ class VitalityApp(ctk.CTk):
         self.result_label = ctk.CTkLabel(self.input_frame, text="BMI: -- \nCategory: --", font=("Roboto", 18))
         self.result_label.pack(pady=20)
 
-        # Chart Panel
         self.chart_frame = ctk.CTkFrame(self.tab_dash, corner_radius=15)
         self.chart_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
         
@@ -121,7 +117,6 @@ class VitalityApp(ctk.CTk):
         self.stat_label = ctk.CTkLabel(self.tab_dash, text="Stats loading...", font=("Roboto", 14))
         self.stat_label.grid(row=1, column=0, columnspan=2, pady=10)
 
-    # --- MANAGE DATA TAB ---
     def setup_manage_data_tab(self):
         self.tab_data.grid_columnconfigure(0, weight=1)
 
@@ -131,7 +126,6 @@ class VitalityApp(ctk.CTk):
         self.export_btn = ctk.CTkButton(self.tab_data, text="Export to CSV", command=self.export_to_csv, fg_color="green")
         self.export_btn.pack(pady=10)
 
-    # --- LOGIC & REFRESH ---
     def process_entry(self):
         w_str, w_unit = self.weight_entry.get(), self.weight_unit.get()
         h_str, h_unit = self.height_entry.get(), self.height_unit.get()
@@ -171,8 +165,7 @@ class VitalityApp(ctk.CTk):
 
     def refresh_all(self):
         data = self.db.get_history(self.current_user_id)
-        
-        # 1. Chart Update
+
         self.ax.clear()
         
         text_color = "white" if self.theme_var.get() == "Dark" else "black"
@@ -207,11 +200,9 @@ class VitalityApp(ctk.CTk):
         self.figure.tight_layout()
         self.canvas.draw()
 
-        # 2. Stats Update
         stats = analytics.generate_stats(data)
         self.stat_label.configure(text=f"Total Entries: {stats['total']} | Avg BMI: {stats['avg_bmi']} | Trend: {stats['trend']}")
 
-        # 3. History Tab Update
         for widget in self.history_scroll.winfo_children():
             widget.destroy()
 

@@ -25,13 +25,12 @@ def convert_height(height_str: str, unit: str) -> tuple[bool, str, float]:
     """Converts height to meters based on the selected unit using Regex."""
     try:
         if unit == "ft'in":
-            # Smartly matches formats like: 5'10, 5.10, 5-10, or 5 10
             match = re.match(r"(\d+)[\'\.\-\s,]+(\d+)?", height_str.strip())
             if match:
                 feet = float(match.group(1))
                 inches = float(match.group(2)) if match.group(2) else 0.0
             else:
-                feet = float(height_str) # Fallback if they just type "5"
+                feet = float(height_str)
                 inches = 0.0
             total_inches = (feet * 12) + inches
             return True, "", round(total_inches * 0.0254, 3)
