@@ -1,4 +1,4 @@
-# Python BMI Analytics — Vitality Pro
+# BMI Analytics
 
 A polished, multi-profile desktop health tracker built in Python.BMI-Analytics combines a modern CustomTkinter GUI with SQLite-backed local storage and Matplotlib visualizations to help users log weight & height, compute BMI, monitor trends (including moving averages), and export historical data as CSV.
 
